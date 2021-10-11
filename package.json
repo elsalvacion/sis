@@ -1,0 +1,23 @@
+{
+  "name": "sis",
+  "version": "1.0.0",
+  "description": "Student Information System",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "author": "elsalvacion",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.12.2",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
