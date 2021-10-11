@@ -12,8 +12,8 @@ const auth = require("./routes/auth");
 const app = express();
 app.use(express.json());
 
-// const User = require("./model/User");
-// User();
+// const Courses = require("./dbTables/Courses");
+// Courses();
 // use routes
 app.use("/admin", admin);
 app.use("/auth", auth);
