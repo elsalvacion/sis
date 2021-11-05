@@ -1,57 +1,10 @@
 const router = require("express").Router();
 const { body, validationResult } = require("express-validator");
 const { connection } = require("../config/db");
-const bcrypt = require("bcryptjs");
-
-// create a user
-router.post(
-  "/create-user",
-  body("email")
-    .notEmpty()
-    .withMessage("Email is required")
-    .isEmail()
-    .withMessage("Incorrect email"),
-  body("role").notEmpty().withMessage("Role is required"),
-  body("password").notEmpty().withMessage("Password is required"),
-  async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-    const { email, role, password } = req.body;
-
-    try {
-      const salt = await bcrypt.genSalt(10);
-
-      const encPasss = await bcrypt.hash(password, salt);
-
-      const sql = `INSERT INTO user(email, role, password) values ('${email}', '${role}', '${encPasss}');`;
-
-      connection.query(sql, (err, results) => {
-        if (err) {
-          if (err.code === "ER_DUP_ENTRY")
-            return res.status(200).json({ msg: "User already exist" });
-          else throw err;
-        }
-        res.status(200).json({ msg: "User added" });
-      });
-    } catch (err) {
-      res.status(500).json({
-        errors: [
-          {
-            msg: "Server Error",
-          },
-        ],
-      });
-    }
-  }
-);
-
-// courses
 
 // create a course
 router.post(
-  "/create-course",
+  "/",
   body("courseCode").notEmpty().withMessage("Course Code is required"),
   body("courseName").notEmpty().withMessage("Course Name is required"),
   body("programme").notEmpty().withMessage("Programme is required"),
@@ -90,7 +43,7 @@ router.post(
 );
 
 // get courses
-router.get("/get-courses", (req, res) => {
+router.get("/", (req, res) => {
   try {
     const sql = `SELECT * FROM courses;`;
 
@@ -114,7 +67,7 @@ router.get("/get-courses", (req, res) => {
 });
 
 // get a course
-router.get("/get-course/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   try {
     const sql = `SELECT * FROM courses WHERE id=${req.params.id};`;
 
@@ -139,7 +92,7 @@ router.get("/get-course/:id", (req, res) => {
 
 // update a course
 router.put(
-  "/update-course/:id",
+  "/:id",
   body("teacher").notEmpty().withMessage("Teacher name is required"),
   (req, res) => {
     try {
@@ -166,7 +119,7 @@ router.put(
 );
 
 // delete a course
-router.delete("/delete-course/:id", (req, res) => {
+router.delete("/:id", (req, res) => {
   try {
     const sql = `DELETE FROM courses WHERE id=${req.params.id};`;
 

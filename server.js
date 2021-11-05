@@ -6,17 +6,29 @@ const { connectDB, connection } = require("./config/db");
 connectDB();
 
 // require routes
-const admin = require("./routes/admin");
+const courses = require("./routes/courses");
 const auth = require("./routes/auth");
+const students = require("./routes/students");
 
 const app = express();
 app.use(express.json());
 
 // const Courses = require("./dbTables/Courses");
 // Courses();
+
+// const User = require("./dbTables/User");
+// User();
+
+// const Teachers = require("./dbTables/Teachers");
+// Teachers();
+
+// const Students = require("./dbTables/Students");
+// Students();
+
 // use routes
-app.use("/admin", admin);
+app.use("/courses", courses);
 app.use("/auth", auth);
+app.use("/students", students);
 
 const PORT = process.env.PORT || 5000;
 
